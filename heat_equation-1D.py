@@ -86,6 +86,6 @@ def init():
 
 fig, ax = plt.subplots()
 line, = ax.plot(np.array(xgrid), data[0], lw=2)
-ax.set(xlim=[min_x,max_x], ylim=[0,1], xlabel='X [m]', ylabel='heat [?]')
+ax.set(xlim=[min_x,max_x], ylim=[0,1], xlabel='X [m]', ylabel='heat [K]')
 ani = animation.FuncAnimation(fig, animate, frames=1000, init_func=init,interval=15, blit=True)
 ani.save('1dHeatEq.gif', writer='imagemagick')

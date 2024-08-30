@@ -41,7 +41,7 @@ def PlotHeatMap(u_t,xgrid,ygrid,t,cmin,cmax,folder):
   plt.xlabel("x (m)")
   plt.ylabel("y (m)")
   plt.pcolormesh(xgrid,ygrid,u_t, cmap=plt.cm.jet, vmin=cmin, vmax=cmax)
-  plt.colorbar(label="heat (j)")
+  plt.colorbar(label="heat (K)")
   plt.savefig(f"{folder}/{t}.png",dpi=300)
   return 0
   """
