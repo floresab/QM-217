@@ -35,9 +35,9 @@ code up your own I.C. and see what happens
 def YourInitialCondition2D(x,y):
   return 1.0
 
-def PlotHeatMap(u_t,xgrid,ygrid,t,cmin,cmax,folder):
+def PlotHeatMap(u_t,xgrid,ygrid,t,dt,cmin,cmax,folder):
   plt.clf()
-  plt.title(f"Temperature at t = {t} seconds")
+  plt.title(f"Temperature at t = {round(t*dt,5)} seconds")
   plt.xlabel("x (m)")
   plt.ylabel("y (m)")
   plt.pcolormesh(xgrid,ygrid,u_t, cmap=plt.cm.jet, vmin=cmin, vmax=cmax)
@@ -111,8 +111,8 @@ if gauss:
   heat[:, :1] = u_left
   heat[:1, 1:] = u_bottom
   heat[:, (xgrid_size-1):] = u_right
-  PlotHeatMap(heat,xgrid,ygrid,0,0,100,"gauss")
-  files.append(f"gauss/{round(0,3)}.png")
+  PlotHeatMap(heat,xgrid,ygrid,0,dt,0,100,"gauss")
+  files.append(f"gauss/{0}.png")
   gammax = alpha*dt/dx**2
   gammay = alpha*dt/dy**2
   next_heat=heat.copy()
@@ -127,8 +127,8 @@ if gauss:
         du_dy = gammay*(heat[i][j+1] -2*heat[i][j] + heat[i][j-1])
         next_heat[i][j] = heat[i][j] + du_dy + du_dx
     heat=next_heat
-    PlotHeatMap(heat,xgrid,ygrid,round(dt*t,3),0,100,"gauss")
-    files.append(f"gauss/{round(dt*t,3)}.png")
+    PlotHeatMap(heat,xgrid,ygrid,t,dt,0,100,"gauss")
+    files.append(f"gauss/{t}.png")
 
   #animate
   make_gif(files, "gauss_heat2d.gif", duration=100)
@@ -149,8 +149,8 @@ if biscuits:
   heat[:, :1] = u_left
   heat[:1, 1:] = u_bottom
   heat[:, (xgrid_size-1):] = u_right
-  PlotHeatMap(heat,xgrid,ygrid,0,273,oven_temperature,"biscuit")
-  files.append(f"biscuit/{round(0,3)}.png")
+  PlotHeatMap(heat,xgrid,ygrid,0,dt,273,oven_temperature,"biscuit")
+  files.append(f"biscuit/{0}.png")
   gammax = alpha*dt/dx**2
   gammay = alpha*dt/dy**2
   next_heat=heat.copy()
@@ -165,8 +165,8 @@ if biscuits:
         du_dy = gammay*(heat[i][j+1] -2*heat[i][j] + heat[i][j-1])
         next_heat[i][j] = heat[i][j] + du_dy + du_dx
     heat=next_heat
-    PlotHeatMap(heat,xgrid,ygrid,round(t*dt,3),273,oven_temperature,"biscuit")
-    files.append(f"biscuit/{round(t*dt,3)}.png")
+    PlotHeatMap(heat,xgrid,ygrid,t,dt,273,oven_temperature,"biscuit")
+    files.append(f"biscuit/{t}.png")
 
   #animate
   make_gif(files, "biscuits_heat2d.gif", duration=100)
